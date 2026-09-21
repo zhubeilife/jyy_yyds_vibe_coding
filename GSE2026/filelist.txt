@@ -3,7 +3,9 @@ lect1.md
 lect2.md
 lect3.md
 lect4.md
+lect5.md
 slides1.html
 slides2.html
 slides3.html
 slides4.html
+slides5.html
