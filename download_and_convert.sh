@@ -22,8 +22,8 @@ sha() { sha256sum "$1" 2>/dev/null | awk '{print $1}'; }
 
 echo "== 抓取首页链接 =="
 curl -sL "$BASE/" \
-  | grep -oE 'href="[a-zA-Z0-9_-]+\.(md|html)"' \
-  | sed -E 's/href="(.*)"/\1/' \
+  | grep -oE 'href="(/GSE/2026/)?[a-zA-Z0-9_-]+\.(md|html)"' \
+  | sed -E 's/href="(\/GSE\/2026\/)?(.*)"/\2/' \
   | sort -u > filelist.txt
 cat filelist.txt
 
