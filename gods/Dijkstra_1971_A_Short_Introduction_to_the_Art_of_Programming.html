@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>EWD 316: A Short Introduction to the Art of Programming</title>
+<style>
+body {
+  color: black;
+  background-color: white;
+}
+hr {
+  height: 1px;
+  color: black;
+  background-color: black;
+  border: 0;
+}
+.right {
+	float: right;
+}
+a {
+  color: blue;
+  background-color: transparent;
+}
+a:hover, a:active {
+	color: white;
+	background-color: blue;
+	text-decoration: none;
+	text-align: justify;
+}
+h1, h2 {
+  font-variant: normal;
+  font-size: 100%; 
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: underline;
+}
+.hint-eq { line-height: 1.75; }
+.hint-eq:before { content: '\2003 = { '; }
+.hint-eq:after { content: ' }'; }
+p {text-indent: 2em; margin-top: 2ex; margin-bottom: 0pt;}
+p.continue {text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt;}
+p.noindent {text-indent: 0pt; margin-top: 2ex; margin-bottom: 0pt;}
+p.nospace  {text-indent: 2em; margin-top: 0pt; margin-bottom: 0pt;}
+p.rightalign {text-align: right;}
+p.center {text-indent: 0pt; text-align: center;}
+p.colofon {text-indent: 0pt; font-size: smaller;}
+p.p0{text-indent: 2em; margin-top: 1ex; margin-bottom: 0pt;}
+p.p1{text-indent: 0pt; margin-top: 1ex; margin-bottom: 0pt;}
+#frame {width: 39em;}
+#header {text-align: right;}
+#footer {font-size: 90%;}
+.nowrap { white-space: nowrap; } 
+.smallCaps {
+	font-size: small;
+	font-variant: small-caps;
+}
+#title {
+	font-size: x-large;
+	font-style: normal;
+	font-weight: bold;
+}
+.half-space {
+	letter-spacing: -0.1em;
+}
+.supsub {
+	position: absolute
+}
+.subscript {
+	display:block; 
+	position:relative; 
+	left:2px; 
+	top: -5px;
+	font-size: small;
+}
+.superscript {
+	display:block; 
+	position:relative; 
+	left:2px; 
+	top: -5px;
+	font-size: small;
+}
+.smallFont {
+	font-size: x-small;
+}
+
+.bigfont {
+	font-size: x-large;	
+}
+
+.intsuma {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+}
+.intsuma > span {
+    display: block;
+    font-size: 70%;
+}
+.intsuma .lim-up {
+    margin-bottom: -0.5ex;
+}
+.intsuma .lim {
+    margin-top: -0.5ex;
+}
+.intsuma .sum {
+	font-size: 1.25em;
+	font-weight: normal;
+	margin-top: -0.5ex;
+}
+
+.intsuma .int {
+	font-size: 1.8em;
+	font-weight: normal;
+	margin-top: -0.4ex;
+}
+
+
+.intsuma .sum-frac {
+	font-size: 1.25em;
+	font-weight: 100;
+	margin-top: -0.5ex;
+}
+
+.eq-c .intsumb {
+	vertical-align: -10%;
+}
+
+.fraction {
+    display: inline-block;
+    vertical-align: middle; 
+    margin: 0 0.2em 0.4ex;
+    text-align: center;
+}
+.fraction > span {
+    display: block;
+    padding-top: 0.15em;
+}
+.fraction span.fdn {
+	border-top: thin solid black;
+}
+
+.fraction span.bar {display: none;}
+
+calculation {
+  text-indent: 0pt; 
+  display: block;
+  margin: 1ex 2em 1ex 2em;
+}
+calculation>hint {
+  display: block;
+  margin: .5ex 0 .5ex .5em;
+}
+calculation>hint:before {
+  content: '{ ';
+}
+calculation>hint:after {
+content: ' }';
+}
+calculation>hint>rel {
+  margin-left: -2.5em;
+  width: 2.5em;
+  display: inline-block;
+}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<div id="frame">
+  <div id="header">
+    <h1 style="text-decoration:none">EWD 316: <i>A Short Introduction to the Art of Programming</i></h1>
+    <p class="noindent">by prof. dr. Edsger W. Dijkstra &mdash; August 1971</p>
+    <p class="noindent">From the Dijkstra Archive (UT Austin); all chapters merged into a single HTML document.</p>
+  </div>
+  <div id="content">
+    <p class="noindent"><u>Contents</u></p>
+    <blockquote><p class="noindent"><a href="#preface">1. Preface</a></p>
+<p class="noindent"><a href="#ch2">2. Some Fundamental Notions</a></p>
+<p class="noindent"><a href="#ch3">3. Programming Languages and their Implementation</a></p>
+<p class="noindent"><a href="#ch4">4. Variables and relations between their values</a></p>
+<p class="noindent"><a href="#ch5">5. Programs corresponding to recurrence relations</a></p>
+<p class="noindent"><a href="#ch6">6. A first example of step-wise program composition</a></p>
+<p class="noindent"><a href="#ch7">7. The shortest spanning subtree of a graph</a></p>
+<p class="noindent"><a href="#ch8">8. The towers of Hanoi</a></p>
+<p class="noindent"><a href="#ch9">9. The problem of eight queens</a></p>
+<p class="noindent"><a href="#ch10">10. A rearranging routine</a></p></blockquote>
+  </div>
+  <hr>
+  <a name="preface"></a><p class="noindent"><a name="preface"></a>1. <u>Preface</u></p>
+				<p>The market is already so heavily overloaded with introductory texts on computers and computer programming that one must have rather specific reasons to justify the investment of one's time and energy in the writing of yet another &quot;Short Introduction to the Art of Programming&quot;. The sole fact that one likes to write is, in itself, an insufficient justification. Before undertaking such a task I should therefore ask myself &quot;Why am I going to do it?&quot; and also &quot;What do I expect to be the distinguishing features of this little monograph?&quot;.</p>
+	<p>There is a simple, practical reason. At my University I give, mainly for future Mathematical Engineers, an introduction to the art of programming and my students would welcome some supporting material. Besides that, without some form of lecture notes, my colleagues have very little idea of what I am really trying to teach! The contents of this course show signs of settling down &#x2014;I have now given it three times&#x2014; and therefore this seems the appropriate moment to produce a document that can serve as lecture notes.</p>
+	<p>These are purely local circumstances and as far as they are concerned, a normal set of lecture notes &#x2014;in Dutch, say&#x2014; would do. The fact that I have not chosen this form means that I am aiming at a larger audience. Such an act is always somewhat presumptuous and the usual author's trick to save the image of his modesty is to say that from various sides he has been urged to produce his manuscript &#x2014;a trick that I could apply in this case without lying. But I don't think that I shall resort to that trick because I really believe that a larger audience than just my students can benefit from it, or even enjoy it.</p>
+	<p>The fact is that over the last years I have addressed myself to the question of whether it was conceivable to increase our programming ability by an order of magnitude and what techniques (mental, organizational or mechanical) should then be applied in the process of program composition. Personally, I felt these investigations very rewarding: I gained a much deeper understanding of the nature of the difficulty of the programming task, I became much more conscious about my &quot;programming style&quot;, which improved considerably, and found myself, when programming, in much better control of what I was doing than I had ever been before. Needless to say, my teaching was heavily influenced by these experiences.</p>
+	<p>The purpose of this little monograph is to assist the programming reader in cleaning up his own thinking, to transmit to him some mental disciplines by sticking to which he can avoid making his job unnecessarily difficult. It is born out of dissatisfaction with the usual kind of programming course, which now strikes me as like the type of driving lessons in which one is taught how to handle a car instead of how to use a car to reach one's destination. This monograph is intended as a complement to such courses; I shall try to present programming &#x2014;to quote Niklaus Wirth&#x2014; &quot;as a discipline on its own merits, as a methodology of constructive reasoning applicable to any problem capable of algorithmic solution&quot;.</p>
+	<p>I expect the distinguishing feature of this little monograph to be its incompleteness, incompleteness in many, many respects.</p>
+	<p>It will not be self-contained in the sense that I assume my readers somewhat familiar with a decent higher level programming language. (This assumption is a direct consequence of the local circumstance that my students have had a modest prior exposure to the cleaner aspects of ALGOL 60.)</p>
+	<p>For those readers who identify the programmer's competence with a thorough knowledge of the idiosyncrasies of one or more of the baroque tools into which modern programming languages and systems have degenerated, the book will also be very incomplete, because I won't describe any programming language &#x2014;not even the one I use&#x2014; to any degree of detail. I shall use some sort of programming language, as &quot;a communication language&quot; say, not for the communication of algorithms, but for the communication of ways of thinking, as a vehicle for programming style.</p>
+	<p>In yet another respect, this little monograph will be very incomplete. As said above, I shall try to present programming &quot;as a discipline on its own merits, as a methodology of constructive reasoning applicable to any problem capable of algorithmic solution&quot;. At present, such a methodology does not yet exist in the full sense of the word, only elements of it have become apparent, others are just lurking behind our mental horizon. This of course, is not very satisfactory, but it is a true reflection of the current, still rather poor state of the art. It is a consolation that no piece of scholarship ever reaches the state of perfection and I tell myself that the conviction that there is more to come is no justification for witholding what we have got.</p>
+	<p>It will also be incomplete as a result of the choice of the examples and the choice of the considerations. By necessity, the examples will be &quot;small&quot; programs, while the need for a discipline becomes really vital in the case of &quot;large&quot; programs. Dealing with small examples in an ad-hoc fashion gives the student not the slightest clue as to how to keep the construction of a large program under his intellectual control. Illustrating how we can avoid unmastered complexity, I hope to deal with small examples in such a fashion, that methodological extrapolation to larger tasks is feasible. The selection of considerations is also kept to a strict minimum: we restrict ourselves to programming for purely sequential machines and when we consider a trade-off question, we shall usually present this in the form of a trade-off between computation time versus store requirements. In this respect the document may strike the reader as very strongly dated, perhaps even out-dated by the time it appears in print. If so, I hope that I can justify my defense, which is that such a reader has failed to read between the lines: it is not so much the particular trade-off question chosen that matters, as the fact that problem has been approached in such a fashion that we have made a conceptual framework in which such specific trade-off questions can be postponed until the appropriate moment. The only thing I can do at this stage is to urge my readers to read between the lines as much as possible. (If one tries to transmit ideas or methods, one can talk about them but that alone is insufficient: one must show examples illustrating them. When lecturing, it is my sad experience that after having dealt with a specific example, I find the attention of half my audience completely usurped by this example: they have forgotten that the example was only brought to their attention to illustrate something more general. This is a sad experience and no amount of prior warning that this misunderstanding is bound to happen if they are not careful, has ever enabled me to avoid it!) To put it in another way: it is my purpose to transmit the importance of good taste and style in programming, the specific elements of style presented serve only to illustrate what benefits can be derived from &quot;style&quot; in general. In this respect I feel akin to the teacher of composition at a conservatory: he does not teach his pupils how to compose a particular symphony, he must help his pupils to find their own style and must explain to them what is implied by this. (It has been this analogy that made me talk about &quot;The Art of Programming&quot;.)</p>
+	<p>There is a further class of potential readers that will find this subject matter very incompletely dealt with, viz. those who identify the programmer's task with writing programs in, say, FORTRAN or PL/1. One of my implicit morals will be that such programming languages, each in their own way, are vehicles inadequate to guide our thoughts. If FORTRAN has been called an infantile disorder, PL/1 must be classified as a fatal disease.</p>
+	<p>Although I would love to do it, it is impossible to give a true acknowledgement, listing all persons whose relevant influence on my thinking I gratefully remember or should remember. With my apologies to all persons unmentioned I would like to make a few exceptions and list in alphabetical order: my mother mrs.B.C.Dijkstra-Kluyver, R.W.Floyd, C.A.R.Hoare, P.Naur, B.Randell, D.T.Ross, N.Wirth and M.Woodger. None of the persons listed, however, should in any way be held responsible for the views expressed (with the possible exception of my mother who is in some sense responsible for my existence).</p>
+	<p>I am deeply indebted to my sister-in-law, mrs.E.L.Dijkstra-Tucker for her willingness to correct my use of English in yet another manuscript and to W.H.J.Feijen for the great care with which he has screened the text for typing errors.</p>
+	<p class="noindent"><a href="#contents">Back to top</a></p>
+				
+<div id="content"><a name="ch2"></a>
+				<p class="noindent"><u>2. Some Fundamental Notions</u></p>
+				<p>In this section a number of notions will be introduced, because they are fundamental to the whole activity of programming. They are so fundamental that they will not be dissected into more primitive concepts. As a result, this section will be a very informal one, analogy, metaphor and natural language (poetry, if I were able!) being the only available vehicles to convey their contents and connotations.</p>
+				<p>It is not unusual &#x2014;although a mistake&#x2014; to consider the programmer's task to be the production of programs. (One finds terms such as &quot;software manufacturing&quot;, proposals to measure programmer productivity by the number of lines of code produced per month etc., although I have never seen the suggestion to measure composer productivity by the number of notes, monthly scribbled on his score!) This mistake may be at the heart of the management failure which is so apparent in many large software efforts. It is a mistake because the true subject matter of the programmer's activity is not the program he composes, but the class of possible computations that may be evoked by it, the &quot;production&quot; of which he delegates to the machine. It seems more fruitful to describe the programmer's activity as &quot;designing a class of computations&quot;, rather than as &quot;making a program&quot;. In this connection it should be borne in mind that the more relevant assertions about programs &#x2014;e.g. about the correctness of their resource demands&#x2014; indeed pertain to the computations, rather than to the last thing that leaves the programmer's hands, viz. the program text. It is for this reason that, when introducing fundamental notions, I will start at the side of the computations, with the &quot;happenings in time&quot;.</p>
+				<p>The first notion is that of an <u>action</u>. An action is a happening, taking place in a finite period of time and establishing a well-defined, intended <u>net</u> <u>effect</u>. In this description, we have included the requirement that the action's should be &quot;intended&quot;, thereby stressing the purposefulness. If we are interested in action at all, it will be by virtue of its net effect.</p>
+				<p>The requirement that the action should take place in a finite period of time is most essential: it implies that we can talk about the moment <i>T</i>0, when the action begins, and the later moment <i>T</i>1, when the action ends. We assume that the net effect of the action can be described by comparing &quot;the state at moment <i>T</i>0&quot; with the &quot;state at moment <i>T</i>1&quot;.</p>
+				<p>An example of an action would be a housewife peeling the potatoes for the evening dinner. The net effect is that the potatoes for the evening dinner are at moment <i>T</i>0 still unpeeled, say in the potato basket in the cellar, while at moment <i>T</i>1 they will be peeled and, say, in the pan they are to be cooked in.</p>
+				<p>When we dissect such a happening as a time sequence of (sub)actions, the cumulative effect of which then equals the net effect of the total happening, then we say that we regard the happening as a <u>sequential</u> <u>process</u>, or <u>process</u> for short.</p>
+				<p>Whenever such a dissection is permissible, we can regard the <u>same</u> happening either as an action, or as a sequential process. When our interest is confined to the net effect, to the states &quot;before and after&quot;, then we regard it as an action. If, however, we are interested in one or more intermediate states as well, then we regard it as a process. In the latter case the moment <i>T</i>0 coincides with the beginning of the first subaction and the end of each subaction coincides with the beginning of the next one, with the exception of the last subaction, whose end coincides with <i>T</i>1, the end of the whole happening.</p>
+				<p>I must stress, that whether some happening is regarded as an action or as a process is not so much an inherent property of the happening as an expression of our mood, of the way in which we prefer to look at it. (Why we should want to look at it in different ways will be left for later discussion.) Similarly, if we have chosen to regard the happening as a process, the way in which it has been dissected is also not so much an inherent property of the happening as a result of which of its distinguishable intermediate states (for some reason or another) we wish to take into consideration.</p>
+				<p>The happening of the potato-peeling housewife could, for instance, be described by the time-succession of the following subactions of the housewife:</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;fetches the basket from the cellar;<br>
+							fetches the pan from the cupboard;<br>
+							peels the potatoes;<br>
+							returns the basket to the cellar&quot; .</p>
+					</blockquote>
+				</blockquote>
+				<p>Here the total happening has been described as a time-succession of four subactions. In order to stress that we have given the description of a happening, we have phrased it in the form of an eye-witness account. Note, that if the eye-witness did not bother to describe that the basket was fetched from the cellar before the pan was fetched from the cupboard, the first two lines would have been condensed into a single subaction &quot;fetches the basket from the cellar and the pan from the cupboard&quot;.</p>
+				<p>We postulate that in each happening we can recognize a <u>pattern</u> <u>of</u> <u>behaviour</u>, or <u>pattern</u> for short; the happening occurs when this pattern is followed. The net effect of the happening is fully determined by the pattern and (possibly) by the initial state (i.e. the state at moment <i>T</i>0). Different happenings may follow the same pattern; if these happenings establish different net effects, the net effect must have been dependent on the initial state as well, and the corresponding initial states must have been different.</p>
+				<p>How we can recognize the same pattern in different happenings falls outside the scope of this text. If we meet a friend, we can recognize his face, no matter what facial expression he shows: it may be an expression we have never seen on is face before! Similarly with different happenings: we recognize the same pattern, abstracting from the possibly different initial states and net effects.</p>
+				<p>We return for a moment to the housewife. On a certain day she has peeled the potatoes for the evening dinner and we have an eye-witness account of this happening. The next day, again, she peels the potatoes for the evening dinner and the second happening gives rise to an eye-witness account equal to the previous one. Can we say, without further ado: &quot;Obviously, the two accounts are equal to each other for on both occasions, she has done exactly the same thing.&quot;?</p>
+				<p>How correct or incorrect this last statement is depends on what we mean by &quot;doing the same thing&quot;. We must be careful not to make the mistake of the journalist who, covering a marriage ceremony, reported that the four bridesmaids wore the same dress. What he meant to say was that the four dresses were made from material of the same design and &#x2014;apart from possible differences in size&#x2014; according to the same pattern.</p>
+				<p>The two actions of the housewife are as different from each other as the dresses are: they have, as happenings, at least a different identity: one took place yesterday, one today. As each potato can only be peeled once, the potatoes involved in the two happenings have different identities as well; the first time the basket may have been fuller than the second time; the number of potatoes peeled may differ, etc.</p>
+				<p>Yet the two happenings are so similar that the same eye-witness account is accepted as adequate for both occasions and that we are willing to apply the same name to both actions (e.g. &quot;peeling the potatoes for the evening dinner&quot;).</p>
+				<p>An <u>algorithm</u> is the <u>description of a pattern of behaviour</u>, expressed in terms of a well-understood, finite repertoire of named (so-called &quot;primitive&quot;) actions of which it is assumed a priori that they can be done (i.e. can be caused to happen).</p>
+				<p>In writing down an algorithm, we start by considering the happening to take place as a process, dissected into a sequence of subactions to be done in succession. If such a subaction occurs in the well-understood, finite repertoire of named actions, the algorithm refers to it by its name. If such a subaction does not occur in the finite repertoire, the algorithm eventually refers to it by means of a subalgorithm in which the subaction, in its turn, is regarded as a process, etc. until at the end all has been reduced to actions from the well-understood, finite repertoire.</p>
+				<p>The notion of an algorithm, of an executable precept for the establishing of a certain net effect, is very well known from daily life: knitting patterns, directions for use, recipes and musical scores are all algorithms. And if one asks the way to the railway station in an unfamiliar town, one asks essentially for an algorithm, for the description of a pattern of behaviour which, when followed, will lead to the desired goal.</p>
+				<p>In our definition of an algorithm we have stressed that the primitive actions should be executable, that they should be done. &quot;Go to the other side of the square.&quot; is perfectly acceptable, &quot;Go to hell.&quot;, however, is not an algorithm but a curse, because it cannot be done.</p>
+				<p>Besides that we have stressed that the repertoire should be well-understood: between the one who composed the algorithm and the one who intends to follow it there should be no misunderstanding about this repertoire. (In this respect knitting patterns are, as a rule, excellent, recipes are of moderate quality while the instructions one gets when asking the way are usually incredibly bad!) How essential this lack of understanding is may perhaps best be demonstrated by a recipe for jugged hare as it occurs in an old Dutch cookery-book; translated into English the recipe runs as follows: &quot;One taketh a hare and prepareth jugged hare from it.&quot;. The recipe is not exactly wrong, but it is hardly helpful!</p>
+				<p>Let us now contrast the eye-witness account of the potato peeling session:</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;fetches the basket from the cellar;<br>
+							fetches the pan from the cupboard;<br>
+							peels the potatoes;<br>
+							returns the basket to the cellar&quot;</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">with the corresponding algorithm &#x2014;the set of instructions, say, the housewife might give to a new maid&#x2014;:</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;fetch the basket from the cellar;<br>
+							fetch the pan from the cupboard;<br>
+							peel the potatoes;<br>
+							return the basket to the cellar&quot; .</p>
+					</blockquote>
+				</blockquote>
+				<p>Comparing the two, we may well ask what we have gained, for it seems a roundabout way of doing things: describing a pattern of behaviour which, when followed, will evoke the happening, while in the eye-witness account we had an excellent way of describing the happening itself.</p>
+				<p>What have we gained? Well, nothing as long as we restrict ourselves to algorithms that can be given &#x2014;as in our example&#x2014; by a concatenation of names of actions, to be done in the given order. Under that restriction an eye-witness account of the actions &quot;as they take place&quot; is equally good. But the behaviour of the housewife (or the maid) could be a little bit more complicated: let us suppose that after the pan had been fetched, she puts on an apron <u>if</u> <u>necessary</u>, i.e. when she wears a light-coloured skirt and that on one day she uses the apron while on the other day she doesn't.</p>
+				<p>On a rather abstract level &#x2014;i.e. without explicit mentioning of the apron and the condition under which it is used, a uniform eye-witness account would still do (in some fashion) for both sessions, e.g.:</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;fetches the basket from the cellar;<br>
+							fetches the pan from the cupboard;<br>
+							takes preparation with regard to clothing;<br>
+							peels the potatoes;<br>
+							returns the basket to the cellar&quot;</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">with the implicit understanding that &quot;takes preparation with regard to clothing&quot; covers the empty action when her skirt is not light-coloured and covers putting on an apron when her skirt is light-coloured.</p>
+				<p>If, however, we want to go into more detail and want to mention the apron explicitly, then &quot;takes preparation with regard to clothing&quot; has to be replaced in the eye-witness account of the one day's session by</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;sees that her skirt is light-coloured and therefore puts on an apron&quot;</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">and in the other day's session by</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;sees that her skirt is not light-coloured and therefore omits putting on an apron&quot; .</p>
+					</blockquote>
+				</blockquote>
+				<p>The trouble is, that the eye-witness account cannot contain the single sentence:</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;puts on an apron if her skirt is light-coloured&quot;</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">for then the audience justly asks &quot;does she do it or not?&quot;. In other words: in that degree of details we cannot cover the two happenings by the same eye-witness account, for in that degree of detail the two happenings differ!</p>
+				<p>It is here that the potential power of the algorithm becomes apparent, for we can recognize the same pattern of behaviour in the two happenings and by describing that pattern of behaviour we give something that is applicable under both circumstances, light- as well as dark-coloured skirt. This is possible thanks to the fact that what actually happens when a certain pattern of behaviour is followed may be co-determined by the state of affairs which is current when the action begins.</p>
+				<p>We see two things: the inspection of whether the skirt is light-coloured or not and, depending on the outcome of this inspection, the action &quot;put on an apron&quot; is to take place or not. In order to express this conditional execution we need in our algorithm another connective besides the semicolon. In our example of the algorithm (I refer to the instructions to the new maid) the semicolon had a double function: in the text it separates one action name from the next action name, but besides that it implied for the happening a certain amount of what is technically called &quot;sequencing control&quot;, i.e. it was meant to imply that the end moment of the preceding action should co-incide with the beginning of the following action. We now need another connective, indicating whether or not the inspection should be followed by the next action in the text. We write for instance the following algorithm:</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;fetch the basket from the cellar;<br>
+							fetch the pan from the cupboard;<br>
+							<u>if</u> skirt is light-coloured <u>do</u> put on an apron;<br>
+							peel the potatoes;<br>
+							return the basket to the cellar&quot; .</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">(for historical reasons the so-called conditional connective &quot;<u>if</u>...<u>do</u>&quot; is split into two symbols &quot;<u>if</u>&quot; and &quot;<u>do</u>&quot;, enclosing the inspection.)</p>
+				<p>The conditional connective connects two actions, the first of which must be a so-called &quot;inspection&quot;. This inspection describes a state of affairs, which may be true or false (&quot;false&quot; is the technical term for &quot;not true&quot;). The happening which is to take place corresponding to the conditional compound</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;<u>if</u> inspection <u>do</u> action&quot;</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">may take one of two mutually exclusive forms: either the inspection gives the result true and it is followed by the action, or the inspection delivers the result false and thereby the whole compound action has been completed. The algorithm derives its superiority over the eye-witness account from the fact that it may contain connectives (such as the conditional connective) that imply a more elaborate sequencing control than the semicolon.</p>
+				<p>We need a further connective before we can see the full superiority of the algorithm over the eye-witness account, viz. a repetitive connective.</p>
+				<p>Suppose that we want to express that &quot;peeling the potatoes&quot; is in itself a process that deals with one potato at a time and that, correspondingly, our primitive action is named &quot;peel a next potato&quot;. If the number of potatoes to be peeled is a fixed constant, say always 25, then we can replace &quot;peel the potatoes&quot; by 25 times &quot;peel a next potato&quot;, separated from each other by in toto 24 semicolons. But we now assume that the number of potatoes to be peeled may differ from one day to the next; yet we want to recognize in each peeling session the same pattern of behaviour. We suppose the housewife capable of looking into the pan and judging whether the amount of peeled potatoes is sufficient or not.</p>
+				<p>If we know a priori that in the worst case (i.e. many guests and very small potatoes) she will never have to peel more than 500 potatoes, we can give a general algorithm describing the actual peeling by repeating in the text of our algorithm 500 times (separated by in toto 499 semicolons) the conditional compound:</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent"><u>if</u> number of peeled potatoes is insufficient <u>do</u> peel a next potato&quot; .</p>
+					</blockquote>
+				</blockquote>
+				<p>Several objections can be made to this solution. There is the practical objection that it would reduce the construction of algorithms to doing lines. Furthermore we had to make the fundamental assumption that we know in advance a maximum number. Often it is very hard to give such an upper bound a priori and if it can be given, such an upper bound is usually many times larger than the average value. And if in actual fact 25 potatoes have to be peeled, the 26th inspection &quot;number of peeled potatoes insufficient&quot; &#x2014;i.e. the first to deliver the result &quot;false&quot;&#x2014; gives fresh information, the following 474 inspections (which are prescribed by the algorithm as suggested) give no new information. Once the housewife has established that the number of peeled potatoes is no longer insufficient, she should not be forced to look into the pan another 474 times in order to convince herself!</p>
+				<p>In order to meet these objections, we introduce a repetitive connective which, again for historical reasons, is written in two parts &quot;<u>while</u>...<u>do</u>&quot;. Using this connective we can write the algorithm:</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;fetch the basket from the cellar;<br>
+							fetch the pan from the cupboard;<br>
+							<u>if</u> skirt is light-coloured <u>do</u> put on an apron;<br>
+							<u>while</u> number of peeled potatoes is insufficient <u>do<br>
+							</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;peel a next potato;<br>
+							return the basket to the cellar&quot; .<br>
+						</p>
+					</blockquote>
+				</blockquote>
+				<p>The process corresponding to</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;<u>while</u> inspection <u>do</u> action&quot;</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">consists of one or more executions of the conditional compound</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;<u>if</u> inspection <u>do</u> action&quot;</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">viz. up to and including the first time that the inspections gives the result &quot;false&quot;.</p>
+				<p>We can also describe the semantics of the repetitive connective in terms of the conditional one recursively:</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;<u>while</u> inspection <u>do</u> action&quot;</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">is semantically equivalent to</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;<u>if</u> inspection <u>do</u><br>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>begin</u> action; <u>while</u> inspection <u>do</u> action <u>end</u>&quot;</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">Here the symbols &quot;<u>begin</u>&quot; and &quot;<u>end</u>&quot; are used as opening and closing bracket respectively; they are a syntactical device to indicate that the conditional connective connects the inspection (from the first line) to the whole of the second line: the value delivered by the first inspection decides whether what is described on the second line (from <u>begin</u> until <u>end</u>) will be done in its entirety or will be skipped in its entirety.</p>
+				<p class="noindent"><u>Note</u>. In the above I have approached the idea of an algorithm starting my considerations from the class of happenings in which we wanted to discern the same pattern of behavior. In addition to the semicolon as connective in the text of the algorithm this led to other connectives such as the conditional connective &quot;<u>if</u>...<u>do</u>&quot; and the repetitive connective &quot;<u>while</u>...<u>do</u>&quot;. It is not unusual to approach the relation between algorithm and computations from the side of the algorithm; such an approach leads in a very early stage to syntactical considerations, as a result of which the connectives are introduced in a somewhat different terminology. Instead of</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;<u>if</u> inspection <u>do</u> action&quot;</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">people write</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;<u>if</u> condition <u>do</u> statement&quot; .</p>
+					</blockquote>
+				</blockquote>
+				<p>The part of the text denoted by &quot;<u>if</u> condition <u>do</u>&quot; is then described as &quot;conditional clause&quot; which is regarded as a prefix attached to the &quot;statement&quot;, the whole construction comprising clause and statement together is then called &quot;a conditional statement&quot;. Similarly, in</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;<u>while</u> condition <u>do</u> statement&quot; ,</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">&quot;<u>while</u> condition <u>do</u>&quot; is called &quot;a repetitive clause&quot; and the statement is called &quot;the repeatable statement&quot;. This terminology is so widely used that &#x2014;in spite of its syntactical origin&#x2014; I shall not refrain from using it whenever I see fit to do so.</p>
+				<p>As a final exercise I shall describe the pattern of behaviour of a housewife who &#x2014;for some obscure reason&#x2014; is so conditioned that she can only peel an even number of potatoes for the evening dinner:</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;fetch the basket from the cellar;<br>
+							fetch the pan from the cupboard;<br>
+							<u>if</u> skirt is light-coloured <u>do</u> put on an apron;<br>
+							<u>while</u> number of peeled potatoes is insufficient <u>do</u><br>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>begin</u> peel a next potato; peel a next potato <u>end</u>;<br>
+							return the basket to the cellar&quot; .</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">This example is included to show that the same set of primitive actions allows different patterns of behaviour.</p>
+				<p>The notion of an algorithm is a very powerful one, for a single algorithm &quot;extracts&quot; what a large number of different happenings may have in common. And it does not do so by ignoring details, on the contrary, a single algorithm covers a whole class of happenings to the very degree of detail in which the corresponding eye-witness accounts would differ from each other. The possible large number of different corresponding happenings is generated by the different ways of sequencing as might be controlled by the conditional, the repetitive (and similar, see later) connectives.</p>
+				<p>On the one hand we have the algorithm, a finite text, a timeless, static concept; on the other hand we have the corresponding happenings that may be evoked by it, dynamic concepts, happenings evolving in time. The intimate relation between the two &#x2014;to which we refer by the term &quot;sequencing&quot;&#x2014; lies at the heart of the algorithmic notion. (It is to this intimate relation that I refer whenever I stress that the programmer's true activity is &quot;The design of classes of computations&quot;.) The notion of an algorithm is admittedly a very powerful one; before going on, however, I shall allow myself a little detour in order to indicate what &quot;price&quot; we have paid for its introduction.</p>
+				<p>We have stated that we restrict ourselves to happenings taking place in a finite period of time. Whenever an algorithm is followed, a happening is taking place, eventually as a time-succession of primitive actions. It is only realistic to postulate that each primitive action will take a finite period of time, unequal to zero: no action will take place &quot;infinitely fast&quot;. This implies that we confine our attention to happenings that are taking place as a time-succession of a <u>finite</u> number of primitive actions.</p>
+				<p>And now we are beginning to see the price: it is very easy to write down a text that looks like an algorithm but that is not an algorithm in our sense of the word, because the effort to follow it turns out to be a never-ending task, e.g.</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;<u>while</u> skirt is light-coloured <u>do</u> peel a next potato&quot; .</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">When we assume that the peeling of a next potato does not influence the colour of the skirt, we have just two cases: either the shirt is not light-coloured and the only action taking place is the inspection establishing this fact, or the skirt is light-coloured and will remain so and what the pattern could be interpreted to describe is the peeling of an infinite number of next potatoes. This is usually called &quot;an improper algorithm&quot;.</p>
+				<p>The question of whether a text that looks like an algorithm is indeed a proper algorithm or not, is far from trivial. As a matter of fact Alan M. Turing has proved that there cannot exist an algorithm capable of inspecting any text and establishing whether it is a proper algorithm or not. The assumption if the existence of such an algorithm leads to a contradiction which will be sketched below. Suppose that we have such an algotithm, an inspection</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent">&quot;proper(<i>L</i>)&quot;</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">which delivers the result true when the text named <i>L</i> is a proper algorithm and the result false when it is improper. Consider now the following text, named <i>L</i>:</p>
+				<blockquote>
+					<blockquote>
+						<p class="noindent"><i>L</i>: &quot;<u>while</u> proper(<var>L</var>) <u>do</u> whistle once&quot;</p>
+					</blockquote>
+				</blockquote>
+				<p class="noindent">(in which &quot;whistle once&quot; is assumed to be an available primitive). If we start to follow this algorithm, how many times will a whistle sound? The assumption that &quot;proper(L)&quot; delivers the result true will cause the algorithm to be improper and vice versa! The conclusion is that no algorithm for the inspection &quot;proper&quot; can exist. (Marvin Minsky concludes in &quot;Computation, Finite and Infinite Machines&quot;, Prentice Hall, 1967 a formal treatment of this proof with the sentence: &quot;We have only the deepest sympathy for those readers who have not encountered this type of simple yet mind-boggling argument before.&quot;.)</p>
+				<p>The moral of this story is that it is an intrinsic part of the duty of everyone who professes to compose algorithms to supply a proof that his text indeed represents a proper algorithm.</p>
+				<p>Our next fundamental notion is a <u>machine</u> (or a &quot;computer&quot;). A machine is a mechanism capable of causing actions to take place following a pattern of behaviour such as can be described by algorithms expressed in terms of a repertoire of primitive actions belonging to this machine.</p>
+				<p>Above we have given two algorithms for peeling potatoes, one for a natural number of potatoes and one only for even numbers of potatoes. Both algorithms have been expressed in the same repertoire of primitive actions. They were introduced in the realm of &quot;observing happenings&quot;; the one could describe the pattern of behaviour of my left-hand neighbour, the other the one of my right-hand neighbour. Suppose that my own wife</p>
+				<table width="448" border="0" cellspacing="2" cellpadding="0">
+					<tr>
+						<td valign="top">1)&nbsp;&nbsp;</td>
+						<td>is also capable of performing those primitive actions</td>
+					</tr>
+					<tr>
+						<td valign="top">2)</td>
+						<td>will accept from me algorithms expressed in these primitives and will follow such an algorithm obediently.</td>
+					</tr>
+				</table>
+				<p class="noindent">Then I can make her peel either as my left-hand neighbour or as my right-hand neighbour, depending on the algorithm I have supplied to her. Then she is an example of a machine.</p>
+				<p>A mechanism that can do only one thing (such as one of the most widely-spread automata, the toilet flusher), is not called a machine. Essential for us is the associated repertoire of actions, the ability to accept patterns if behaviour and to behave accordingly.</p>
+				<p>Machines are mechanical algorithm followers. The fact that in the last decennia increasingly powerful machines have become available to mankind is directly responsible for the increased importance of and interest in algorithms and their composition.</p>
+				<p class="noindent"><u>Note</u>. It is a trivial matter to compose an algorithm for the fastest machine in the world, a proper algorithm in the theoretical sense of the word but somewhat impractical, as it would take the machine a million years to carry out the corresponding process to completion. The claim that &quot;the machine is capable of causing the process to take place&quot; is then somewhat subject to doubt: in actual fact it cannot. In what follows we shalln't be bothered by the distinction between &quot;theoretically possible&quot; and &quot;practically feasible&quot;. Not because we are impractical, on the contrary! The point is that in the meantime computers are so powerful that the class of practically feasible computations is by now sufficiently large &#x2014;to put it mildly!&#x2014; to make machines very useful and intriguing pieces of equipment, fully worthy of our attention.</p>
+				<p>We call an algorithm intended to control the behaviour of a machine, a <u>program</u>. In other words, we reserve the name <u>program</u> for those algorithms that are intended for mechanical execution. In the general notion of an algorithm we have only required that the repertoire should be &quot;well-understood&quot;, without bothering how this understanding is established: if a composer indicates &quot;Andante&quot; (= &quot;going&quot;) for a composition in three-four time, he may do so, because, remarkably enough, we may expect this indication to be somehow meaningful even for a player with two legs. In the case of a machine, the situation is drastically different, for a machine is a finite piece of equipment which, by its very construction, has associated with it a finite, very well defined repertoire and whenever it is fed with a program it shall behave exactly as prescribed.</p>
+				<p>The fact that machines are completely obedient slaves has caused complaints from many beginning programmers. Their obedience, they felt, makes programming cruelly difficult, for a trivial mistake in the program is sure to lead to entirely unintended behaviour. The programmer's inability to appeal to &quot;the common sense of the machine&quot; has been experienced as one of its major shortcomings. The more experienced programmer learns to appreciate its servile, strict obedience; thanks to it we can instruct it to do something &quot;uncommon&quot;! And this is something you cannot do with a servant who &quot;rounds off&quot; his instructions to the nearest probable interpretation.</p>
+				<p>In the preceding paragraphs I have introduced programming as an important activity because now we have machines that can be controlled by programs and for which we have to compose programs when we want to use them, i.e. when we want to convert them into the tool solving our problem. But this is not the whole story. A computer is a many-sided thing. For its manufacturer it is primarily a product that he can (hopefully) produce and sell with profit. For many institutional buyers the computer is probably primarily a status symbol. For many years it is either a source of endless worries or, as the case may be, a highly useful tool. In University surroundings, the view of the computer as a tool to be used tends to be the predominant one. And there is no denying it: in their capacity of tools the computers are changing the face of the earth (and of the moon as well!). Yet I am convinced that we underestimate the computer's significance if we confine our appreciation of it to the aspects mentioned. They may cause shocks to the basis of our society, but I believe in the longer run these will turn out to be but ripples on the surface of our culture. I expect a much more profound influence from the advent of the modern computer, viz. in its capacity of a gigantic intellectual challenge, unprecedented in the history of mankind.</p>
+				<p>The computer as a piece of equipment presents us with an entirely new combination of simplicity and power, which makes the programming task a unique challenge. When the electronic engineers have done their job properly, they present to the programmer a mathematically trivial piece of equipment. Its instruction code (its &quot;repertoire&quot;) can be described perfectly well on a modest number of pages, everything is finite and discrete, there is just no place for conceptually difficult mathematical notions, such as continuity, infinity, limits, irrational numbers and whatnots. The mathematical basis of programming is just very, very simple. So simple that programming should be easy: it should be easy to conceive programs, it should be easy to convince oneself that a program is correct and that the machine working under its control will indeed produce the desired result. From its basic simplicity one derives the intuitive feeling that it should be a trivial matter to keep the happening evoked by one's program firmly within one's intellectual grip.</p>
+				<p>But its basic simplicity is only one side of the coin: the other side presents the extreme power (both as regards capacity and speed) of currently available computers. As a result of its extreme power, both the amount of information playing a role in the computations as well as the number of operations performed in the course of a computation, escape our unaided imagination by several orders of magnitude. Due to the limited size of our skull we are absolutely unable to visualize to any appreciable degree of detail what we are going to set in motion, and programming thereby comes an activity facing us with conceptual problems that have risen far, far above the original level of triviality.</p>
+				<p>It is the possibility of considering realistically effective solutions of any degree of sophistication, combined with our complete intellectual grip on what we are considering, which will deeply influence our ways of thinking and our appreciation of our own thought processes. It has no precedent, for whenever in the past we were faced with something powerful (a storm or an army) we never had effective control over it. (This for a long time, used to be the definition of &quot;powerful&quot;, viz. that we were &quot;powerless&quot; in the face of it!)</p>
+				<p></p>
+			</div>
+<div id="content"><a name="ch3"></a>
+														<blockquote>
+															<div align="left">
+																<p class="noindent">0. Contents</p>
+																<p class="noindent">1. <a title="Chapter 1 of EWD 316" href="#preface">Preface</a><br>
+																	<br>
+																	2. <a title="Chapter 2 of EWD 316" href="#ch2">Some Fundamental Notions</a><br>
+																	<br>
+																	3. Programming Languages and their Implementation<br>
+																	<br>
+																	4. <a title="Chapter 4 of EWD 316" href="#ch4">Variables and relations between their values</a><br>
+																	<br>
+																	5. <a title="Chapter 5 of EWD 316" href="#ch5">Programs corresponding to recurrence relations</a><br>
+																	<br>
+																	6. <a title="Chapter 6 of EWD 316" href="#ch6">A first example of step-wise program composition</a><br>
+																	<br>
+																	7. <a title="Chapter 7 of EWD 316" href="#ch7">The shortest spanning subtree of a graph</a><br>
+																	<br>
+																	8. <a title="Chapter 8 of EWD 316" href="#ch8">The towers of Hanoi</a><br>
+																	<br>
+																	9. <a title="Chapter 9 of EWD 316" href="#ch9">The problem of eight queens</a><br>
+																	<br>
+																	10. <a title="Chapter 10 of EWD 316" href="#ch10">A rearranging routine</a></p>
+															</div>
+														</blockquote>
+													</div>
+<div id="content"><a name="ch4"></a>
+				<p>For a meaningful loop controlled by a while-clause we can make the following further observations. Let us consider the loop &quot;<u>while</u> <var>B</var> <u>do</u> <var>S&nbsp;</var>&quot;.</p>
+				<p>Our first observation is that the execution of the repeatable statement <em>must</em> change the state. Suppose that it does not. If then the repeatable statement is executed once, the predicate <var>B</var> (that was true prior to its execution) will still be true after its execution, so that the statement <var>S</var> will be executed yet another time; then the argument can be repeated and the net result is that the repetition will not terminate. The only termination occurs when <var>B</var> is false to begin with: then the statement <var>S</var> will be executed zero times. This we don't call a &quot;meaningful loop&quot;.</p>
+				<p>So, execution of statement <var>S</var> changes the state: let us call &quot;<var>s</var>&quot; that part of the total state that may be changed by the execution of statement <var>S</var>. Here &quot;<var>s</var>&quot; can be regarded as the aggregate of variables whose values can be affected by the execution of statement <var>S</var>. Then our second observation is that (one or more variables of) <var>s</var> must be involved in the predicate <var>B</var>. If not, a single execution of the repeatable statement would imply infinitely many (by the same argument as used in our previous observation). Treating &quot;<var>s</var>&quot; as a generalized variable, we can express this explicitly by rewriting the loop, using two functions of the generalized argument <var>s</var>:</p>
+				<blockquote>
+					<p class="noindent">&quot;<u>while</u> <var>B</var>(<var>s</var>) <u>do</u> <var>s </var>:= <var>S</var>(<var>s</var>)&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</p>
+				</blockquote>
+				<p>This is the basic form of <em>every</em> repetition which is controlled by a while-clause. Reading it, it is obvious that its behaviour is undefined when the initial value of <var>s</var> is completely undefined. In terms of programming this leads to our third observation:</p>
+				<blockquote>
+					<p class="noindent">Every repetition controlled by a while-clause requires a proper initialization of the variables involved.</p>
+				</blockquote>
+				<p class="noindent">(Although obvious, this rule is mentioned explicitly, because I have seen many programmers forgetting to initialize properly. The rule is so rigid that such an omission is not a mistake but a blunder.)</p>
+				<p>Let the initial state be denoted by <var>s</var><sub>0</sub> and let the state immediately after the <var>i</var>-th execution of the repeatable statement be denoted by <var>s<sub>i</sub></var>; let the loop terminate after the <var>k</var>-th execution of the repeatable statement. Then the following theorems hold.</p>
+				<p class="noindent">Theorem 8:<br>
+					Given <var>s</var><sub>0</sub> , the remaining successive values of <var>s</var> are given by the recurrence relation</p>
+				<blockquote>
+					<p class="noindent"><var>s<sub>i</sub></var> = <var>S </var>(<var>s<sub>i</sub></var><sub>-1</sub>)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for 0 &lt;<var> i</var> &#x2264; <var>k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</var></p>
+				</blockquote>
+				<p class="noindent">Theorem 9:<br>
+					In the sequence <var>s</var><sub>0</sub>, <var>s</var><sub>1</sub>, &#133;, <var>s<sub>k</sub></var> no two values (with different subscripts) are equal.</p>
+				<p class="noindent">Theorem 10:</p>
+				<blockquote>
+					<p class="noindent"><var>B </var>(<var>s</var><sub><var>i </var></sub>) for all <var>i</var> satisfying 0 &#x2264; <var>i</var> &lt; <var>k</var> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and</p>
+					<p class="continue"><u>non</u> <var>B </var>(<var>s</var><sub><var>k</var></sub>)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</p>
+				</blockquote>
+				<p>Theorem 8 is fairly obvious. It is mentioned, however, because it shows that a repetition is an adequate tool for the evaluation of a recurrence relation. Theorem 9 is mentioned because it is so obviously correct (although I see at present no use for it). Theorem 10 &#x2014;also called the &quot;Linear Search Theorem&quot;&#x2014; which is also fairly obvious, is a very important one, comparable in importance to Theorem 5. It does not only assert that after termination the state <var>s<sub>k</sub></var> will be such that <u>non</u> <var>B</var> is valid, it asserts that in all previous states <var>s<sub>i</sub></var> with <var>i</var> &lt; <var>k</var> (if any) <var>B</var> did hold. This theorem is used in many searching algorithms looking for the <em>smallest</em> number for which a predicate <var>B</var> is false: by inspecting the numbers in the order of increasing magnitude, the <em>smallest</em> becomes the <em>first</em> found. Theorem 10 tells us that in that case a loop controlled by a while-clause is a proper vehicle. (It is not restricted to looking for a smallest number, it can be applied to any (somehow) ordered set of values of some sort.)</p>
+				<p class="noindent"><u>Remark</u>. We have called the last three theorems &quot;obvious&quot;. This is not meant to imply that giving a reasonably formal proof for them is trivial. I did it, but the resulting proofs were surprisingly cumbersome and boring.</p>
+				<p>Finally, in Theorems 2, 3, and 5 we always have assumptions including the truth of <var>B</var> prior to the execution of <var>S</var>. Clearly we are not interested in the net effect of the execution of <var>S</var> after an initial state in which <var>B</var> is false. As a matter of fact, with such initial states the net effect of an <var>S</var> will often be undefined. (A similar remark can be made regarding Theorem 4.) in other words: our statements <var>S</var> regarded as operators are often not defined on the domain of all possible states, they are &quot;partial operators&quot; and the predicates occurring in the clauses ensure that they will not be evoked inappropriately. This observation should temper our hope of increasing computation speed by introducing more parallelism.</p>
+				<p></p>
+			</div>
+<div id="content"><a name="ch5"></a>
+														<div align="left">
+															<p class="noindent">0. Contents</p>
+															<p class="noindent">1. <a title="Chapter 1 of EWD 316" href="#preface">Preface</a><br>
+																<br>
+																2. <a title="Chapter 2 of EWD 316" href="#ch2">Some Fundamental Notions</a><br>
+																<br>
+																3. <a title="Chapter 3 of EWD 316" href="#ch3">Programming Languages and their Implementation</a><br>
+																<br>
+																4. <a title="Chapter 4 of EWD 316" href="#ch4">Variables and relations between their values</a><br>
+																<br>
+																5. Programs corresponding to recurrence relations<br>
+																<br>
+																6. <a title="Chapter 6 of EWD 316" href="#ch6">A first example of step-wise program composition</a><br>
+																<br>
+																7. <a title="Chapter 7 of EWD 316" href="#ch7">The shortest spanning subtree of a graph</a><br>
+																<br>
+																8. <a title="Chapter 8 of EWD 316" href="#ch8">The towers of Hanoi</a><br>
+																<br>
+																9. <a title="Chapter 9 of EWD 316" href="#ch9">The problem of eight queens</a><br>
+																<br>
+																10. <a title="Chapter 10 of EWD 316" href="#ch10">A rearranging routine</a></p>
+														</div>
+													</div>
+<div id="content"><a name="ch6"></a>
+				<p class="noindent"><u><code>begin</code></u><code>&nbsp;&nbsp; <u>integer</u> array d[1:100]; <u>boolean</u> good; <u>integer</u> length, i, m, mbound, k, firstend;<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SET SEQUENCE EMPTY AND LENGTH TO ZERO:<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length:= 0;<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>repeat</u> TRANSFORM SEQUENCE INTO NEXT SOLUTION:<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXTEND WITH ZERO:<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length:= length + 1; d[length]:= 0;<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>repeat</u> ADJUST:<u><br>
+						</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>while</u> d[length] = 3 <u>do</u> length:= length - 1;<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d[length]:= d[length] + 1;<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SET GOOD:<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;good:= <u>true</u>; m:= 1; mbound:= length <u>div</u> 2;<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>while</u> m </code>&#x2264;<code> mbound <u>and</u> good <u>do<br>
+						</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>begin</u> GIVE GOOD THE MEANING THAT THE MSEQUENCES DIFFER:<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;firstend:= length - m; k:= 0;<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>repeat</u> good:= (d[length - k] </code>&#x2260;<code> d[firstend - k]);<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k:= k + 1;<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>until</u> k = m <u>or</u> good;<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m:= m + 1<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>end<br>
+						</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>until</u> good;<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRINT:<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i:= 0; <u>repeat</u> i:= i + 1; printdigit(d[i]) <u>until</u> i = length; newline<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>until</u> length = 100<br>
+					</code><u><code>end</code></u> *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<br>
+					*</p>
+				<p class="noindent"><u>Exercise</u>.</p>
+				<p>Given a linear array of 36 positions, make a program generating all ways (if any) in which these positions can be filled with zeros and ones (one digit per position), such that the 32 quintuples of five adjoining positions represent the 32 different patterns of five binary digits, restricting ourselves to sequences starting with five zeros. C. Ligtmans has shown that any such solution must end with four zeros. His argument is as follows. Each solution must start with <code>000001...</code>, because the pattern <code>00000</code> may occur only once. Somewhere in the sequence the pattern <code>10000</code> must occur once; as this pattern can only be followed by a <code>0</code> or a <code>1</code>, its ''following'' quintuple must be either <code>00000</code> or <code>00001</code>, presented already by the first two quintuples. As a result the pattern <code>10000</code> cannot occur in the interior of the linear sequence and therefore it must be the rightmost pattern. From Ligtmans' observation it follows that we can close the ring, making the last four zeros overlap with the four initial zeros. The different patterns are then arranged in a cycle of 32 positions.</p>
+				<p>The patterns have to be generated in alphabetical order.</p>
+				<p class="noindent">Discussion and some hints:</p>
+				<p>I take for granted that, given a sequence of 36 binary digits, the boolean function stating whether this sequence represents a solution is computable, and that we could write an algorithm computing it. In principle we could write a program generating all 36-digit sequences with five leading zeros in alphabetical order and subjecting all these sequences to the test just mentioned, thereby selecting those satisfying the test. This gives a very unrealistic program and we shall not pursue it; we only remark that generating the trial sequences in alphabetical order will ensure that the solutions, when found, will be found in alphabetical order as well.</p>
+				<p>The program to be made could be regarded as a derivation from the ridiculous one sketched above, viz. by the introduction of some significant short cuts. At present we shall not stress this relation any further.</p>
+				<p>Instead of generating all 36-digit sequences and selecting from this set, we aim at generating only a much smaller set which is guaranteed to contain all solutions. Let us define as ''length of sequence'' the number of quintuples it contains (i.e. <var>length</var> = <var>number of digits</var> <code>-</code> 4). Let us call a sequence ''acceptable'' if no two different quintuples in it present the same digit pattern. With these definitions the solutions are a subset of the set of acceptable sequences, viz. those with length = 32.</p>
+				<p>We do not know whether there are any solutions at all but we do know that the set of acceptable sequences is non-empty (e.g. ''<code>00000</code>''); we do not have a ready-made criterion to recognize ''the last solution'' when we encounter it; in our set of acceptable sequences, however, we can designate a virtual last one (viz. ''<code>00001</code>''<a href="#note">*</a>); when that one is encountered we know that all acceptable sequences with five leading zeroes have been scanned and that no further solutions will be found.</p>
+				<p>Summarizing, we know if the set of acceptable sequences:</p>
+				<ol>
+					<li>it is non-empty and finite
+					<li>we know a first member (''<code>00000</code>'')
+					<li>we know a virtual last member (''<code>00001</code>''<a href="#note">*</a>)					<li>we can transform an acceptable sequence into the next acceptable sequence
+					<li>solutions are all acceptable sequences satisfying the further condition length = 32
+					<li>no extension of a sequence that is not acceptable will be acceptable.
+				</ol>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The last property makes this problem mathematically speaking very similar to the previous one.
+				<p class="noindent"><u>Hint</u>. The test for acceptability can be speeded up considerably by tabulating which quintuplets are to be found in the sequence.</p>
+				<p class="noindent"><u>Remark</u>. This problem is difficult and it will take you many hours to produce a beautiful program. But these hours will be extremely well-spent.</p>
+				<p class="noindent"><a name="note"></a>[Note added to this transcription at the suggestion of Max Kohler: for the &quot;virtual last&quot; sequence read &quot;10000&quot;.]</p>
+				<p></p>
+			</div>
+<div id="content"><a name="ch7"></a>
+													<blockquote>
+														<div align="left">
+															<p class="noindent">0. Contents</p>
+															<p class="noindent">1. <a title="Chapter 1 of EWD 316" href="#preface">Preface</a><br>
+																<br>
+																2. <a title="Chapter 2 of EWD 316" href="#ch2">Some Fundamental Notions</a><br>
+																<br>
+																3. <a title="Chapter 3 of EWD 316" href="#ch3">Programming Languages and their Implementation</a><br>
+																<br>
+																4. <a title="Chapter 4 of EWD 316" href="#ch4">Variables and relations between their values</a><br>
+																<br>
+																5. <a title="Chapter 5 of EWD 316" href="#ch5">Programs corresponding to recurrence relations</a><br>
+																<br>
+																6. <a title="Chapter 6 of EWD 316" href="#ch6">A first example of step-wise program composition</a><br>
+																<br>
+																7. The shortest spanning subtree of a graph<br>
+																<br>
+																8. <a title="Chapter 8 of EWD 316" href="#ch8">The towers of Hanoi</a><br>
+																<br>
+																9. <a title="Chapter 9 of EWD 316" href="#ch9">The problem of eight queens</a><br>
+																<br>
+																10. <a title="Chapter 10 of EWD 316" href="#ch10">A rearranging routine</a></p>
+														</div>
+													</blockquote>
+												</div>
+<div id="content"><a name="ch8"></a>
+													<blockquote>
+														<div align="left">
+															<p class="noindent">0. Contents</p>
+															<p class="noindent">1. <a title="Chapter 1 of EWD 316" href="#preface">Preface</a><br>
+																<br>
+																2. <a title="Chapter 2 of EWD 316" href="#ch2">Some Fundamental Notions</a><br>
+																<br>
+																3. <a title="Chapter 3 of EWD 316" href="#ch3">Programming Languages and their Implementation</a><br>
+																<br>
+																4. <a title="Chapter 4 of EWD 316" href="#ch4">Variables and relations between their values</a><br>
+																<br>
+																5. <a title="Chapter 5 of EWD 316" href="#ch5">Programs corresponding to recurrence relations</a><br>
+																<br>
+																6. <a title="Chapter 6 of EWD 316" href="#ch6">A first example of step-wise program composition</a><br>
+																<br>
+																7. <a title="Chapter 7 of EWD 316" href="#ch7">The shortest spanning subtree of a graph</a><br>
+																<br>
+																8. The towers of Hanoi<br>
+																<br>
+																9. <a title="Chapter 9 of EWD 316" href="#ch9">The problem of eight queens</a><br>
+																<br>
+																10. <a title="Chapter 10 of EWD 316" href="#ch10">A rearranging routine</a></p>
+														</div>
+													</blockquote>
+												</div>
+<div id="content"><a name="ch9"></a>
+													<blockquote>
+														<div align="left">
+															<p class="noindent">0. Contents</p>
+															<p class="noindent">1. <a title="Chapter 1 of EWD 316" href="#preface">Preface</a><br>
+																<br>
+																2. <a title="Chapter 2 of EWD 316" href="#ch2">Some Fundamental Notions</a><br>
+																<br>
+																3. <a title="Chapter 3 of EWD 316" href="#ch3">Programming Languages and their Implementation</a><br>
+																<br>
+																4. <a title="Chapter 4 of EWD 316" href="#ch4">Variables and relations between their values</a><br>
+																<br>
+																5. <a title="Chapter 5 of EWD 316" href="#ch5">Programs corresponding to recurrence relations</a><br>
+																<br>
+																6. <a title="Chapter 6 of EWD 316" href="#ch6">A first example of step-wise program composition</a><br>
+																<br>
+																7. <a title="Chapter 7 of EWD 316" href="#ch7">The shortest spanning subtree of a graph</a><br>
+																<br>
+																8. <a title="Chapter 8 of EWD 316" href="#ch8">The towers of Hanoi</a><br>
+																<br>
+																9. The problem of eight queens<br>
+																<br>
+																10. <a title="Chapter 10 of EWD 316" href="#ch10">A rearranging routine</a></p>
+														</div>
+													</blockquote>
+												</div>
+<div id="content"><a name="ch10"></a>
+													<blockquote>
+														<div align="left">
+															<p class="noindent">0. Contents</p>
+															<p class="noindent">1. <a title="Chapter 1 of EWD 316" href="#preface">Preface</a><br>
+																<br>
+																2. <a title="Chapter 2 of EWD 316" href="#ch2">Some Fundamental Notions</a><br>
+																<br>
+																3. <a title="Chapter 3 of EWD 316" href="#ch3">Programming Languages and their Implementation</a><br>
+																<br>
+																4. <a title="Chapter 4 of EWD 316" href="#ch4">Variables and relations between their values</a><br>
+																<br>
+																5. <a title="Chapter 5 of EWD 316" href="#ch5">Programs corresponding to recurrence relations</a><br>
+																<br>
+																6. <a title="Chapter 6 of EWD 316" href="#ch6">A first example of step-wise program composition</a><br>
+																<br>
+																7. <a title="Chapter 7 of EWD 316" href="#ch7">The shortest spanning subtree of a graph</a><br>
+																<br>
+																8. <a title="Chapter 8 of EWD 316" href="#ch8">The towers of Hanoi</a><br>
+																<br>
+																9. <a title="Chapter 9 of EWD 316" href="#ch9">The problem of eight queens</a><br>
+																<br>
+																10. A rearranging routine</p>
+														</div>
+													</blockquote>
+												</div>
+</div>
+</body>
+</html>
