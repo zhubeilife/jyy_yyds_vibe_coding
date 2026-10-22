@@ -8,6 +8,7 @@ lect5.md
 lect6.md
 lect7.md
 lect8.md
+lect9.md
 slides1.html
 slides2.html
 slides3.html
@@ -16,3 +17,4 @@ slides5.html
 slides6.html
 slides7.html
 slides8.html
+slides9.html
