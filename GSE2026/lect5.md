@@ -167,7 +167,7 @@ Contract”](https://ieeexplore.ieee.org/document/161279)
 例如，一个不允许透支的账户，可以把取款操作的前置条件设为“金额为正，且不超过当前余额”，把后置条件设为“新余额等于旧余额减去取款金额”。下面用
 Eiffel 风格的代码表示这个过程，省略外围的类定义：
 
-```
+```hljs
 withdraw (amount: INTEGER)
     require
         positive_amount: amount > 0

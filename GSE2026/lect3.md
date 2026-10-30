@@ -142,7 +142,7 @@ practices，也就是在实践中积累的良好做法。它们经常来自一�
 
 真实项目里出现过一个很小的设计选择：
 
-```
+```hljs
 [TYPO-CHECK] Docs should be typo-free
 [typo-check] Docs should be typo-free
 ```
@@ -183,7 +183,7 @@ Code](https://code.cs61a.org/)
 再来看一个日常问题：你会写 commit message 吗？`update`
 当然能成为提交说明，但几个月后翻历史，它几乎不能帮助任何人。假设修复了命令解析器，可以写成：
 
-```
+```hljs
 fix(parser): accept repeated spaces between arguments
 ```
 
