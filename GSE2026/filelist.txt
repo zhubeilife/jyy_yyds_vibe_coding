@@ -1,7 +1,8 @@
 lab1.md
 lab2.md
-lect1.md
 lect10.md
+lect11.md
+lect1.md
 lect2.md
 lect3.md
 lect4.md
@@ -10,8 +11,9 @@ lect6.md
 lect7.md
 lect8.md
 lect9.md
-slides1.html
 slides10.html
+slides11.html
+slides1.html
 slides2.html
 slides3.html
 slides4.html
