@@ -192,3 +192,43 @@ Fred Brooks 在 1986 年的论文《No Silver Bullet》里提出这组区分。�
 
 - 明确模块职责、数据归属和接口约定，排除大量随意组合。
 - 一个实用判断：**需求改一处，需要跟着改多少处？**
+
+
+
+## Lec 8 Agent Native开发
+
+### Everything Is a State Machine
+
+Ralph Loop 的关键提示词
+
+- **每轮都验证并评估结果**
+- 开发者是 “不可信” 的——自以为只改一点点不会有事
+  - Workspace = state
+  - Agent = transition
+
+### 把 Agent 的偏执变成可执行的约束
+
+| 常见问题            | 自动检查                        | 人工判断           |
+| :------------------ | :------------------------------ | :----------------- |
+| 一写就是 20 KB 文档 | 文档字数预算 · 重复段落检查     | 内容是否值得保留   |
+| 堆细节、造多余抽象  | 重复率 · 未使用代码检查         | 抽象是否必要       |
+| 小任务变成大重构    | 改动范围白名单 · Diff 预算      | 超出范围是否批准   |
+| 代码能跑，但读不懂  | Lint · 类型检查 · 复杂度上限    | 命名与设计审查     |
+| 改测试，让失败消失  | 受保护的回归测试 · 测试删除告警 | 行为变更是否合理   |
+| 顺手关闭 CI 规则    | 规则文件变更须指定人批准        | 批准者与开发者分离 |
+
+### Agent Native 开发
+
+harness原来的意思是马具，后来引申成为驾驭和使用
+
+```python
+  def agent(task):
+      ctx = [system_prompt, task]                   # harness: 组装上下文
+      while True:
+          out = model(ctx)                          # 模型: 唯一的一次"思考"
+          if out.is_final: return out.text
+          if not allowed(out.tool): result = "denied"   # harness: 边界
+          else: result = run(out.tool, out.args)        # harness: 执行
+          ctx.append(out); ctx.append(result)           # 反馈: 结果写回上下文
+```
+
