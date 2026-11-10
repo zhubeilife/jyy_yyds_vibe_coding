@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="从 Santa Maria、New Orleans、Jupiter / Langley 到 Midway：适合横屏课堂展示的船舶历史小册。">
+<title>从风帆到海上机场</title>
+<style>
+:root{--paper:#f5f3ed;--ink:#18323b;--muted:#5c6b70;--sea:#23675f;--rust:#ab4d2f;--line:#cfd8d2;--font:clamp(20px,min(1.76vw,2.9vh),34px);--sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--paper);color:var(--ink)}body{font:var(--font)/1.6 var(--sans);-webkit-font-smoothing:antialiased}button,select{font:inherit}button,select,summary{cursor:pointer}a{color:var(--sea);text-underline-offset:.2em}button:focus-visible,select:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #be7950;outline-offset:4px}p{margin:0 0 .85em}h1,h2,h3{line-height:1.3;margin:0;font-weight:650;letter-spacing:-.025em}strong{font-weight:650;color:var(--sea)}img{display:block;max-width:100%}figure{margin:0;min-width:0}button{touch-action:manipulation}::selection{background:#e6c7a9}body.viewer-open{overflow:hidden}
+.book{height:calc(100dvh - 52px)}.page{display:none;height:100%;padding:clamp(20px,2vw,38px) clamp(24px,2.7vw,52px);grid-template-rows:auto minmax(0,1fr);gap:clamp(16px,1.8vh,24px);overflow:auto}.page.active{display:grid}.page h1{font-size:clamp(29px,2.65vw,51px)}.page-head{padding-bottom:clamp(12px,1.5vh,20px);border-bottom:1px solid var(--line)}.page-body{min-height:0;min-width:0}.spread{display:grid;grid-template-rows:minmax(0,1fr);grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:clamp(24px,3vw,58px);align-items:stretch}.spread.balanced{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}.spread.portrait{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)}.photo{display:flex;flex-direction:column;min-height:0;gap:10px}.image-link{display:flex;align-items:center;justify-content:center;min-height:0;flex:1;background:#e8e8e0;cursor:zoom-in;overflow:hidden}.image-link img{width:100%;height:100%;min-height:0;object-fit:contain}.photo figcaption{font-size:clamp(13px,1.08vw,20px);line-height:1.45;color:var(--muted);flex-shrink:0}.photo figcaption a{white-space:nowrap}.copy{align-self:center;min-width:0}.copy p:last-child{margin-bottom:0}.copy h2{font-size:1.12em;margin:0 0 .55em}.copy h3{font-size:1em;margin:1em 0 .35em}.key{padding:.7em 0 .7em .85em;margin:.9em 0 0;border-left:4px solid var(--rust);font-weight:600;line-height:1.5}.copy .key:last-child{margin-bottom:0}.fact{font-size:.79em;line-height:1.65;color:var(--muted);border-top:1px solid var(--line);padding-top:.8em;margin-top:1em}.flow{display:flex;align-items:center;gap:.55em;margin:1em 0;padding:.7em 0;border-block:1px solid var(--line);font-weight:600;font-size:.9em;flex-wrap:wrap}.flow b{font-weight:400;color:var(--rust)}.steps{list-style:none;padding:0;margin:.7em 0;counter-reset:steps}.steps li{counter-increment:steps;position:relative;padding:.55em 0 .55em 1.9em;border-top:1px solid var(--line)}.steps li::before{content:counter(steps);position:absolute;left:0;color:var(--rust);font:1.2em/1.6 Georgia,serif}.steps li:last-child{border-bottom:1px solid var(--line)}
+.cover{background:#17313a;color:#f8f5ec}.cover .page-head{border-color:#ffffff35}.cover h1{font-size:clamp(34px,3.15vw,60px)}.cover .spread{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)}.cover .image-link{background:#17313a}.cover figcaption{color:#bcd0d0}.cover figcaption a{color:#d9b08d}.route{list-style:none;margin:0;padding:0;align-self:stretch;display:grid;grid-template-rows:repeat(4,1fr);gap:0}.route li{display:grid;grid-template-columns:2.5em 1fr;gap:.7em;align-content:center;border-bottom:1px solid #ffffff30;padding:.5em 0}.route li:last-child{border-bottom:0}.route .year{color:#dfad82;font:1.3em/1.2 Georgia,serif}.route h2{font-size:1.08em;margin-bottom:.2em}.route p{font-size:.84em;line-height:1.5;margin:0;color:#c7d7d6}.route a{text-decoration:none;color:inherit}.pair-body{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:clamp(15px,2vh,24px)}.pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,2.4vw,46px);min-height:0}.pair .photo{gap:8px}.pair h2{font-size:1em;font-weight:600}.explanation{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3em;border-top:1px solid var(--line);padding-top:.6em;font-size:.88em;line-height:1.5}.explanation p{margin:0}.explanation strong{display:block;margin-bottom:.18em}.compare{display:grid;gap:.7em;margin:1em 0}.compare div{padding:.55em 0;border-bottom:1px solid var(--line)}.compare b{display:block;font-size:.86em;color:var(--rust);margin-bottom:.2em}.compare p{margin:0}.summary-body{display:flex;flex-direction:column;justify-content:space-around;gap:20px}.summary-table{width:100%;border-collapse:collapse;font-size:.93em;line-height:1.5}.summary-table th,.summary-table td{padding:.62em .75em;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}.summary-table thead th{font-size:.8em;color:var(--muted);font-weight:500;padding-top:0}.summary-table th:first-child{padding-left:0;width:23%}.summary-table tbody th{font-weight:600}.summary-table small{font-size:.78em;font-weight:400;display:block;color:var(--rust)}.takeaways{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5em;font-size:.92em}.takeaways h2{font-size:1em;color:var(--sea);margin-bottom:.3em}.takeaways p{margin:0}.summary-note{font-size:.72em;color:var(--muted);margin:0}
+.controls{height:52px;padding:0 clamp(16px,2.7vw,52px);display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid var(--line);background:#fffdf7;font-size:14px}.controls button{background:transparent;border:1px solid transparent;border-radius:3px;padding:5px 10px;color:var(--ink);min-height:34px;font-size:14px}.controls button:hover,.controls select:hover{background:#e9eee8;border-color:var(--line)}.controls button:disabled{opacity:.3;cursor:default}.controls select{font-size:14px;color:var(--ink);border:0;max-width:38vw;padding:5px 22px 5px 0;background:transparent;text-overflow:ellipsis}.pager,.utilities{display:flex;align-items:center;gap:8px}.counter{min-width:58px;text-align:center;font-size:14px;font-variant-numeric:tabular-nums;color:var(--muted)}
+dialog{border:1px solid #ffffff40;border-radius:4px;padding:0;background:#17313a;color:#f8f5ec;max-height:95dvh;width:min(1280px,95vw);box-shadow:0 20px 90px #0006}dialog::backdrop{background:#071c23ed}.viewer-toolbar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid #ffffff30;font-size:16px}.viewer-toolbar h2{font-size:16px}.viewer-toolbar button{background:transparent;border:1px solid #ffffff50;color:inherit;padding:5px 12px;font-size:20px;min-width:40px;min-height:36px}.viewer-controls{display:flex;gap:8px}.viewer-image{display:flex;justify-content:center;align-items:center;padding:16px}.viewer-image img{max-height:calc(95dvh - 190px);height:auto;width:auto;object-fit:contain}.viewer-bottom{font-size:15px;line-height:1.5;padding:0 20px 18px;color:#d0dcd8}.viewer-bottom p{margin:0 0 7px}.viewer-bottom a{color:#e4b58e}#sources-dialog{background:var(--paper);color:var(--ink);width:min(900px,92vw)}#sources-dialog .viewer-toolbar{border-color:var(--line)}#sources-dialog .viewer-toolbar button{border-color:var(--line)}.source-content{padding:20px 28px;font-size:17px;line-height:1.8}.source-content ol{padding-left:1.3em}.source-content li{margin:.75em 0}.source-content p{margin-bottom:1em}
+@media screen and (max-height:760px) and (min-width:900px){:root{--font:clamp(20px,1.65vw,30px)}.page{padding-block:18px;gap:14px}.page-head{padding-bottom:12px}.page h1{font-size:clamp(28px,2.5vw,44px)}.copy p{margin-bottom:.65em}.copy .key{padding-block:.55em;margin-top:.7em}.fact{margin-top:.65em;padding-top:.65em}.flow{margin:.7em 0}.steps li{padding-block:.4em}}
+@media screen and (max-width:820px) and (orientation:portrait){:root{--font:20px}.book{height:calc(100dvh - 56px)}.page{padding:20px;grid-template-rows:auto auto;align-content:start;gap:20px}.page h1,.cover h1{font-size:29px}.spread,.spread.balanced,.spread.portrait,.cover .spread{grid-template-rows:auto;grid-template-columns:1fr;gap:22px}.photo{min-height:230px}.image-link{flex:auto}.image-link img{height:auto;max-height:65dvh;min-height:0}.route{gap:12px}.route li{padding:12px 0}.cover .route{font-size:20px}.pair-body{grid-template-rows:auto auto}.pair{grid-template-columns:1fr;gap:24px}.explanation,.takeaways{grid-template-columns:1fr;gap:18px}.summary-body{overflow-x:auto}.summary-table{min-width:650px;font-size:18px}.summary-note{font-size:15px}.controls{height:56px;padding:0 8px;gap:4px}.controls select{max-width:31vw;font-size:12px}.utilities button{font-size:12px;padding:3px 5px}.utilities #print-button{display:none}.pager{gap:1px}.pager button{font-size:12px;padding:4px 6px}.counter{font-size:12px;min-width:40px}.photo figcaption{font-size:14px}.viewer-bottom{font-size:13px}.viewer-toolbar{padding:9px}.viewer-toolbar h2{font-size:14px}}
+@media print{@page{size:A4 landscape;margin:10mm}html,body{height:auto;background:#fff;font-size:14pt}.book{height:auto}.page,.page.active{display:grid;height:188mm;break-after:page;break-inside:avoid;padding:4mm 0;gap:5mm;overflow:hidden}.page:last-child{break-after:auto}.page h1,.cover h1{font-size:25pt}.page-head{padding-bottom:4mm}.cover{background:#fff;color:var(--ink)}.cover .page-head{border-color:var(--line)}.cover .image-link{background:#fff}.cover figcaption,.cover figcaption a,.route p{color:var(--muted)}.route li{border-color:var(--line)}.route .year{color:var(--rust)}.copy p{margin-bottom:.6em}.photo figcaption{font-size:9pt}.controls,dialog{display:none!important}.image-link{background:transparent}.fact{font-size:10pt;margin-top:.7em}.copy .key{margin-top:.7em}.flow{margin:.7em 0}.summary-note{font-size:9pt}.steps li{padding-block:.4em}a{color:inherit;text-decoration:none}:focus-visible{outline:none}}
+</style>
+</head>
+<body>
+<main class="book" aria-label="船舶历史小册">
+<section class="page cover active" id="overview" data-title="从风帆到海上机场" aria-labelledby="title-1">
+<header class="page-head"><h1 id="title-1">从风帆到海上机场</h1></header>
+<div class="page-body spread">
+<figure class="photo"><a class="image-link" href="uss-midway-exterior-1945-nh49829.webp" aria-label="放大 Midway 1945 年照片"><img src="uss-midway-exterior-1945-nh49829.webp" width="2500" height="1963" alt="Midway 在 1945 年的舰艏与直通飞行甲板。"></a><figcaption>Midway，1945 年秋，纽约。美国海军档案 <a href="https://www.history.navy.mil/browse-by-topic/ships/aircraft-carriers/uss-midway.html">NH 49829</a>。</figcaption></figure>
+<ol class="route">
+<li><span class="year">1492</span><div><h2><a href="#santa-maria">Santa Maria</a></h2><p>帆与索具利用风力，船员的配合支撑跨洋航行。</p></div></li>
+<li><span class="year">1811</span><div><h2><a href="#new-orleans">New Orleans</a></h2><p>把锅炉和机器装进船里，获得持续逆流航行的动力。</p></div></li>
+<li><span class="year">1922</span><div><h2><a href="#langley">USS Langley</a></h2><p>运煤船架起飞行甲板，船成为组织飞机起降的平台。</p></div></li>
+<li><span class="year">1945</span><div><h2><a href="#midway">USS Midway</a></h2><p>围绕航空作业，把动力、空间、设备与人员纳入整舰设计。</p></div></li>
+</ol>
+</div></section>
+
+<section class="page" id="santa-maria" data-title="Santa Maria：驾驭风力" aria-labelledby="title-2">
+<header class="page-head"><h1 id="title-2">1492 · Santa Maria：用帆与索具驾驭风力</h1></header>
+<div class="page-body spread">
+<figure class="photo"><a class="image-link" href="santa-maria-1492-reconstruction-model-1965.webp" aria-label="放大 Santa Maria 模型"><img src="santa-maria-1492-reconstruction-model-1965.webp" width="4000" height="2657" alt="Santa Maria 复原模型，三桅、船帆、木船体与密集索具。"></a><figcaption>1965 年考证模型，巴塞罗那海事博物馆制作，<a href="https://www.si.edu/object/ship-model-santa-maria:nmah_844077">Smithsonian 藏</a>。模型细节属于后世复原。</figcaption></figure>
+<div class="copy">
+<p>Santa Maria 原是一艘商船，1492 年成为哥伦布首次横渡大西洋航行的旗舰，抵达已有居民生活的加勒比地区。</p>
+<p><strong>风提供动力，帆与索具提供控制。</strong>船员调整帆的姿态与航向，让不断变化的风转化为可用的推进。</p>
+<p>看图中的绳索：帆需要调整，桅杆需要支撑，受力需要传到船体。跨洋航行已经依赖许多部件和许多人的配合。</p>
+<p class="key">动力来自船外。天气、航海经验与物资储备，共同约束航程。</p>
+<p class="fact">原船于 1492 年圣诞节在 Hispaniola 附近搁浅，没有保存下来；图中是有研究依据的复原模型。</p>
+</div>
+</div></section>
+
+<section class="page" id="new-orleans" data-title="New Orleans：把动力装进船里" aria-labelledby="title-3">
+<header class="page-head"><h1 id="title-3">1811 · New Orleans：把动力装进船里</h1></header>
+<div class="page-body spread">
+<figure class="photo"><a class="image-link" href="new-orleans-1811-reconstruction-fryant.webp" aria-label="放大 New Orleans 复原画"><img src="new-orleans-1811-reconstruction-fryant.webp" width="1000" height="750" alt="New Orleans 复原画，船身保留桅杆，舷侧有明轮和轮罩。"></a><figcaption><a href="https://steamboats.com/museum/davet-illustrationspaintingsfryant.html">John Fryant 复原画</a>。描绘 1811 年的船，具体河段未注明。</figcaption></figure>
+<div class="copy">
+<p>New Orleans 于 1811 年在匹兹堡建成，由 Robert Fulton 设计、Robert Livingston 出资，Nicholas Roosevelt 参与建造并负责首航。</p>
+<p>船沿俄亥俄河、密西西比河向南，1812 年抵达新奥尔良，随后在新奥尔良与 Natchez 之间开展运输。</p>
+<div class="flow" aria-label="蒸汽动力链">燃料 <b>→</b> 锅炉 <b>→</b> 蒸汽机 <b>→</b> 明轮</div>
+<p><strong>推进力可以由船上的机器持续提供。</strong>画中的明轮是新动力的出口；保留的桅杆，则留下了帆船的影子。</p>
+<p class="key">从利用外部的风，变为携带燃料、运行机器。燃料、供水与维护成为新的日常工作。</p>
+</div>
+</div></section>
+
+<section class="page" id="upstream" data-title="蒸汽改变了怎样的航行？" aria-labelledby="title-4">
+<header class="page-head"><h1 id="title-4">新的动力，让逆流而上成为日常能力</h1></header>
+<div class="page-body spread">
+<figure class="photo"><a class="image-link" href="new-orleans-1811-reconstruction-lucy.webp" aria-label="放大 New Orleans 月夜逆流航行画"><img src="new-orleans-1811-reconstruction-lucy.webp" width="600" height="367" alt="月夜河面，前景平底船顺流漂行，远方 New Orleans 汽船逆流而上。"></a><figcaption><a href="https://www.garylucy.com/neworleans.html">Gary R. Lucy 后世复原画</a>，描绘 1811 年 Louisville 附近的<strong>俄亥俄河</strong>场景。</figcaption></figure>
+<div class="copy">
+<p>这幅画把两种航行方式放在一起：前景的平底船随流而下，远处的 New Orleans 用蒸汽动力逆流而上。</p>
+<div class="compare"><div><b>动力改变以前</b><p>航程安排高度依赖自然条件与可用的牵引手段。</p></div><div><b>动力改变以后</b><p>船上机器持续提供推力，内河运输更有条件成为可以重复安排的往返服务。</p></div></div>
+<p>汽船仍受水深、河道和水流限制，也需要燃料与维修；它获得的是<strong>更主动地安排航行</strong>的能力。</p>
+<p class="fact">画面不在密西西比河；New Orleans 随后才进入密西西比河。1811 是描绘的历史年代，不是画作创作年。</p>
+</div>
+</div></section>
+
+<section class="page" id="langley" data-title="Jupiter → Langley：同一艘船的新任务" aria-labelledby="title-5">
+<header class="page-head"><h1 id="title-5">1913 → 1922 · 运煤船长出了飞行甲板</h1></header>
+<div class="page-body pair-body">
+<div class="pair">
+<figure class="photo"><h2>USS Jupiter · 运煤船</h2><a class="image-link" href="uss-jupiter-collier-1913.webp" aria-label="放大 Jupiter 运煤船"><img src="uss-jupiter-collier-1913.webp" width="853" height="567" alt="1913 年 Jupiter 运煤船，长船体上排列着装卸煤炭的高大桅架。"></a><figcaption>1913-10-16。成排桅架服务于煤炭装卸。<a href="https://airandspace.si.edu/multimedia-gallery/image/22bwint2022buildinglangley-ussjupiterlivejpg">Smithsonian / 美国海军历史照片</a>。</figcaption></figure>
+<figure class="photo"><h2>USS Langley · 航空母舰</h2><a class="image-link" href="uss-langley-overview-1920s.webp" aria-label="放大 Langley 航母全景"><img src="uss-langley-overview-1920s.webp" width="910" height="690" alt="改装后的 Langley，原船体上方架起飞行甲板，下面的钢支架清晰可见。"></a><figcaption>1920 年代，原船体上方架起连续甲板。<a href="https://airandspace.si.edu/multimedia-gallery/image/22mwint2022buildinglangley-langley1920slivejpg">Smithsonian / NARA</a>。</figcaption></figure>
+</div>
+<div class="explanation"><p><strong>同一艘船，改变任务</strong>Jupiter 1913 年服役；改装后的 Langley 于 1922 年成为美国海军第一艘航母。</p><p><strong>空间开始围绕飞机重排</strong>现成船体和货舱提供基础，上层安排起降，下层承担存放与转运。</p><p><strong>从运输，走向组织作业</strong>目标从“把货物送到目的地”，变为让飞机起飞、返回，并准备下一次飞行。</p></div>
+</div></section>
+
+<section class="page" id="flight-deck" data-title="Langley：甲板上的作业流程" aria-labelledby="title-6">
+<header class="page-head"><h1 id="title-6">Langley：有了甲板，还要学会怎样组织飞行</h1></header>
+<div class="page-body spread">
+<figure class="photo"><a class="image-link" href="uss-langley-wooden-deck-ca1928.webp" aria-label="放大 Langley 木甲板照片"><img src="uss-langley-wooden-deck-ca1928.webp" width="866" height="641" alt="Langley 舰员检查事故后的 Vought O2U-1，前景可见木甲板板缝与阻拦装置。"></a><figcaption>约 1928 年，舰员检查事故后的 Vought O2U-1。前景木甲板板缝清晰。美国海军档案 <a href="https://www.history.navy.mil/our-collections/photography/numerical-list-of-images/nhhc-series/nh-series/NH-78000/NH-78324.html">NH 78324</a>。</figcaption></figure>
+<div class="copy">
+<p>木甲板提供了连续的起降场地，但飞机落上来以后，工作才刚刚开始。</p>
+<ol class="steps"><li><strong>安全降落：</strong>让飞机减速、停下。</li><li><strong>腾出甲板：</strong>停放与转运不能妨碍下一架飞机。</li><li><strong>再次出动：</strong>准备、调度与人员操作要彼此配合。</li></ol>
+<p>Langley 在 1920 年代承担试验与训练。设备如何使用、舰员如何协作，都要在实际操作中积累经验。</p>
+<p class="key">航母的能力既在船的结构里，也在人的工作方法里。</p>
+</div>
+</div></section>
+
+<section class="page" id="elevator" data-title="Langley：把上下层接起来" aria-labelledby="title-7">
+<header class="page-head"><h1 id="title-7">Langley：升降机、滑道与吊架，把上下层接起来</h1></header>
+<div class="page-body spread">
+<figure class="photo"><a class="image-link" href="uss-langley-elevator-1923.webp" aria-label="放大 Langley 升降机操作照片"><img src="uss-langley-elevator-1923.webp" width="1024" height="799" alt="舰员利用临时滑道把飞机推向升降机，上方是钢支架与转运设施。"></a><figcaption>1923-07-10，飞机沿临时滑道被推上升降机。上方横梁与行车属于转运设施。美国海军国家博物馆 <a href="https://www.flickr.com/photos/national_museum_of_the_us_navy/15330089195">19-NS-L6</a>。</figcaption></figure>
+<div class="copy">
+<p>飞机要在存放空间与飞行甲板之间移动。不同高度的甲板，必须通过一套转运流程连接起来。</p>
+<div class="flow" aria-label="飞机转运流程">存放 <b>→</b> 转运 <b>→</b> 升降 <b>→</b> 飞行甲板</div>
+<p>Langley 的升降机降到底后，仍高于主甲板。照片中的临时滑道，让这项改装船的约束变得直观：<strong>有了升降机，仍需解决怎样把飞机送上去。</strong></p>
+<p>原有船体限制了空间安排。升降机、吊架、滑道和操作人员，要共同完成这一段搬运。</p>
+<p class="key">新功能接上以后，接口怎样衔接，决定整套流程能否顺畅工作。</p>
+</div>
+</div></section>
+
+<section class="page" id="midway" data-title="Midway：围绕航空作业设计整舰" aria-labelledby="title-8">
+<header class="page-head"><h1 id="title-8">1945 · Midway：围绕航空作业设计整艘船</h1></header>
+<div class="page-body spread">
+<figure class="photo"><a class="image-link" href="uss-midway-exterior-1945-09-10.webp" aria-label="放大 Midway 1945 年全景"><img src="uss-midway-exterior-1945-09-10.webp" width="1872" height="1475" alt="1945 年 9 月 10 日，Midway 在 Hampton Roads 航行，呈现最初的直通飞行甲板。"></a><figcaption>1945-09-10，Hampton Roads。最初的直通飞行甲板。美国海军国家海军航空博物馆 <a href="https://commons.wikimedia.org/wiki/File:USS_Midway_(CVB-41)_underway_on_10_September_1945.jpg">1996.488.116.075</a>。</figcaption></figure>
+<div class="copy">
+<p>Midway 于 1945 年 9 月 10 日服役，已在二战结束之后。它从建造时就作为大型航母设计，拥有装甲飞行甲板。</p>
+<div class="compare"><div><b>Langley 的起点</b><p>利用现有船体，加装航空设施，在实际使用中寻找办法。</p></div><div><b>Midway 的起点</b><p>在整舰设计中，共同安排飞行甲板、机库、动力、防护和保障空间。</p></div></div>
+<p class="key">航空作业规模扩大，要求整艘船持续提供条件：供给不断、飞机周转、各部门协调。</p>
+</div>
+</div></section>
+
+<section class="page" id="boilers" data-title="Midway：管路背后的能源与供给" aria-labelledby="title-9">
+<header class="page-head"><h1 id="title-9">Midway：甲板之下，先要让能源与供给持续运行</h1></header>
+<div class="page-body spread portrait">
+<figure class="photo"><a class="image-link" href="uss-midway-boiler-room-1952-53-p61-reference.webp" aria-label="放大 Midway 锅炉部门纪念册页"><img src="uss-midway-boiler-room-1952-53-p61-reference.webp" width="950" height="1253" alt="Midway 锅炉部门纪念册页，右上可见人员在密集管路、阀门与仪表之间工作。"></a><figcaption>1952–1953 年巡航纪念册，第 61 页，B Division。<a href="https://www.navysite.de/cruisebooks/cv41-53/059.htm">Navysite.de 扫描本</a>。</figcaption></figure>
+<div class="copy">
+<p>右上照片里，操作人员被管路、阀门和仪表包围。下方的照片，则记录了维持这些设备运行的维护工作。</p>
+<p>锅炉部门提供蒸汽，也照管淡水与燃油等供给。看起来复杂的管路，都在回答具体的问题：<strong>从哪里来，送到哪里，怎样控制？</strong></p>
+<ol class="steps"><li><strong>管路：</strong>把设备与使用位置联系起来。</li><li><strong>阀门：</strong>让操作人员调节和控制流动。</li><li><strong>仪表：</strong>显示设备当前的运行状态。</li></ol>
+<p class="key">飞行甲板的持续作业，建立在船内各项供给持续可用的基础上。</p>
+<p class="fact">这页早于 1955–1957 年的首次大规模现代化改装，但不能证明照片中每条管路都保持着 1945 年原貌。</p>
+</div>
+</div></section>
+
+<section class="page" id="engines" data-title="Midway：设备、人员与持续改进" aria-labelledby="title-10">
+<header class="page-head"><h1 id="title-10">Midway：让许多设备成为一艘可以运行的船</h1></header>
+<div class="page-body spread portrait">
+<figure class="photo"><a class="image-link" href="uss-midway-engine-room-1952-53-p66-reference.webp" aria-label="放大 Midway 轮机部门纪念册页"><img src="uss-midway-engine-room-1952-53-p66-reference.webp" width="950" height="1247" alt="Midway 轮机部门人员在大直径管路、阀轮和仪表旁操作，右下照片可见管路与阀门细节。"></a><figcaption>1952–1953 年巡航纪念册，第 66 页，M Division；非 1945 年实拍。<a href="https://www.navysite.de/cruisebooks/cv41-53/064.htm">Navysite.de 扫描本</a>。</figcaption></figure>
+<div class="copy">
+<p>轮机部门负责主推进装置。右下照片中的大直径管路、阀轮与仪表，显示了设备和操作人员之间的密切联系。</p>
+<p><strong>设备需要分工，分工需要交接。</strong>值守、操作、检查和维护，让各个部门的工作能够接续起来。</p>
+<p>回看 New Orleans 的“锅炉—蒸汽机—明轮”，我们追踪的是一条动力链；到 Midway，则需要同时理解许多共同运行的系统。</p>
+<p class="key">整舰能力来自能源、空间、设备和人员的共同安排。</p>
+<p class="fact">新的飞机继续推动改进：1955–1957 年，Midway 获得斜角飞行甲板与封闭舰艏，适应喷气机时代的需求。这也是今天的博物馆外观与 1945 年不同的原因之一。</p>
+</div>
+</div></section>
+
+<section class="page" id="changes" data-title="关键变化：动力、任务与整舰协同" aria-labelledby="title-11">
+<header class="page-head"><h1 id="title-11">每增加一种能力，就要重新安排一些关系</h1></header>
+<div class="page-body summary-body">
+<table class="summary-table"><thead><tr><th scope="col">船与时间</th><th scope="col">获得的能力</th><th scope="col">关键组织方式</th><th scope="col">必须面对的约束</th></tr></thead><tbody>
+<tr><th scope="row">Santa Maria<small>1492</small></th><td>跨洋航行</td><td>帆、索具、船体与船员配合</td><td>风与海况、物资储备</td></tr>
+<tr><th scope="row">New Orleans<small>1811–1812</small></th><td>更主动的内河往返运输</td><td>锅炉、蒸汽机与明轮形成动力链</td><td>燃料、供水、维护与河道</td></tr>
+<tr><th scope="row">Jupiter → Langley<small>1913 → 1922</small></th><td>在船上组织飞机起降</td><td>飞行甲板与转运流程接入现成船体</td><td>空间限制、装置衔接与操作经验</td></tr>
+<tr><th scope="row">Midway<small>1945</small></th><td>支撑更大规模的航空作业</td><td>动力、空间、防护和保障纳入整舰设计</td><td>持续供给、部门协同与后续改装</td></tr>
+</tbody></table>
+<div class="takeaways"><div><h2>动力来源改变</h2><p>从利用风，到携带燃料、运行机器，补给与维护成为能力的一部分。</p></div><div><h2>船的任务改变</h2><p>从运输人员物资，到组织航空作业，空间开始围绕新的流程重排。</p></div><div><h2>整舰组织改变</h2><p>从在现成船体上接入设施，到把越来越多的要求放进同一套设计。</p></div></div>
+<p class="summary-note">这里比较的是技术能力，不是船型的直接谱系；只有 Jupiter → Langley 是同一艘船的改装。全部 11 张图来自既有材料，年代与出处见图注及“图像说明”。</p>
+</div></section>
+</main>
+
+<nav class="controls" aria-label="小册子翻页">
+<select id="page-select" aria-label="跳转页面"></select>
+<div class="pager"><button id="prev" type="button" aria-label="上一页">← 上一页</button><span class="counter" id="counter" aria-live="polite"></span><button id="next" type="button" aria-label="下一页">下一页 →</button></div>
+<div class="utilities"><button id="sources-button" type="button">图像说明</button><button id="print-button" type="button">打印</button><button id="fullscreen-button" type="button">全屏</button></div>
+</nav>
+
+<dialog id="image-reader" aria-labelledby="viewer-title">
+<div class="viewer-toolbar"><h2 id="viewer-title">图片 <span id="viewer-count"></span></h2><div class="viewer-controls"><button id="viewer-prev" type="button" aria-label="上一张图片">←</button><button id="viewer-next" type="button" aria-label="下一张图片">→</button><button id="viewer-close" type="button" aria-label="关闭图片" autofocus>×</button></div></div>
+<div class="viewer-image"><img id="viewer-img" alt=""></div>
+<div class="viewer-bottom"><p id="viewer-caption"></p><a id="viewer-original" target="_blank" rel="noopener">打开原图</a></div>
+</dialog>
+<dialog id="sources-dialog" aria-labelledby="sources-title">
+<div class="viewer-toolbar"><h2 id="sources-title">图像与年代说明</h2><button id="sources-close" type="button" aria-label="关闭图像说明" autofocus>×</button></div>
+<div class="source-content">
+<p>本册仅依据已经收集的图像与资料整理。可用左右方向键翻页，Home / End 跳到首尾页；点击图片可放大。打印采用横版分页。</p>
+<ol>
+<li><strong>Santa Maria：</strong>1965 年考证复原模型，由巴塞罗那海事博物馆在 José María Martínez-Hidalgo y Terán 指导下制作，Smithsonian 藏，TR.325800。它不是原船实物，也不代表全部细节已无争议。藏品图片标注 Usage Conditions Apply。</li>
+<li><strong>New Orleans：</strong>John Fryant 与 Gary R. Lucy 的后世复原画，保留作者和原图水印。Lucy 画中的地点为俄亥俄河；作者页与 Hanover 项目对具体日期的叙述不一致，本册不指定某一天。<a href="https://history.hanover.edu/texts/1811/Web/1811-Fall.html">Hanover 历史资料</a>。</li>
+<li><strong>Jupiter / Langley：</strong>美国海军与 NARA 历史照片。Jupiter 是运煤船；Langley 是美国海军第一艘航母。升降机图采用官方文字说明中的 1923 年历史日期。<a href="https://www.history.navy.mil/about-us/leadership/director/directors-corner/h-grams/h-gram-069/h-069-1.html">海军结构说明</a> · <a href="https://airandspace.si.edu/air-and-space-quarterly/winter-2022/americas-first-aircraft-carrier">Smithsonian 舰史</a>。</li>
+<li><strong>Midway：</strong>外观照片为 1945 年；舱内材料来自 1952–1953 年巡航纪念册，不能标为 1945 年原貌。1955–1957 年改装的介绍见 <a href="https://www.midway.org/about/about-the-uss-midway">Midway 博物馆舰史</a>。</li>
+</ol>
+<p>全部图片保留下载原貌，未补画、上色或去水印；两幅绘画未发现开放许可。<a href="ship-image-sources.txt">完整逐图出处、下载地址与核对记录</a>。</p>
+</div></dialog>
+<script>
+(()=>{
+'use strict';
+const pages=[...document.querySelectorAll('.page')],select=document.getElementById('page-select'),counter=document.getElementById('counter');
+const prev=document.getElementById('prev'),next=document.getElementById('next');let current=0;
+pages.forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=(i+1)+'. '+p.dataset.title;select.append(o)});
+function showPage(index,updateHash=true){current=Math.max(0,Math.min(pages.length-1,index));pages.forEach((p,i)=>{p.classList.toggle('active',i===current);p.setAttribute('aria-hidden',String(i!==current));if(i===current)p.scrollTop=0});select.value=current;counter.textContent=(current+1)+' / '+pages.length;prev.disabled=current===0;next.disabled=current===pages.length-1;if(updateHash)history.replaceState(null,'','#'+pages[current].id);document.title=pages[current].dataset.title+' · 从风帆到海上机场'}
+function fromHash(){const i=pages.findIndex(p=>'#'+p.id===location.hash);showPage(i<0?0:i,false)}
+select.addEventListener('change',()=>showPage(Number(select.value)));prev.addEventListener('click',()=>showPage(current-1));next.addEventListener('click',()=>showPage(current+1));window.addEventListener('hashchange',fromHash);
+document.querySelectorAll('.route a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showPage(pages.findIndex(p=>'#'+p.id===a.getAttribute('href')))}));
+document.addEventListener('keydown',e=>{if(document.querySelector('dialog[open]')||e.ctrlKey||e.metaKey||e.altKey||/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName))return;if(['ArrowRight','PageDown','ArrowLeft','PageUp','Home','End'].includes(e.key)){e.preventDefault();if(e.key==='Home')showPage(0);else if(e.key==='End')showPage(pages.length-1);else showPage(current+(['ArrowRight','PageDown'].includes(e.key)?1:-1))}});
+document.getElementById('print-button').addEventListener('click',()=>window.print());
+const fullscreen=document.getElementById('fullscreen-button');if(!document.documentElement.requestFullscreen)fullscreen.hidden=true;fullscreen.addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{}});document.addEventListener('fullscreenchange',()=>{fullscreen.textContent=document.fullscreenElement?'退出全屏':'全屏'});
+const reader=document.getElementById('image-reader'),links=[...document.querySelectorAll('.image-link')],viewerImage=document.getElementById('viewer-img');let currentImage=0,opener=null;
+function displayImage(index){currentImage=(index+links.length)%links.length;const link=links[currentImage];viewerImage.src=link.href;viewerImage.alt=link.querySelector('img').alt;document.getElementById('viewer-caption').textContent=link.closest('figure').querySelector('figcaption').textContent.trim();document.getElementById('viewer-count').textContent=(currentImage+1)+' / '+links.length;document.getElementById('viewer-original').href=link.href}
+links.forEach((link,index)=>link.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey||typeof reader.showModal!=='function')return;e.preventDefault();opener=link;displayImage(index);reader.showModal();document.body.classList.add('viewer-open')}));
+document.getElementById('viewer-prev').addEventListener('click',()=>displayImage(currentImage-1));document.getElementById('viewer-next').addEventListener('click',()=>displayImage(currentImage+1));document.getElementById('viewer-close').addEventListener('click',()=>reader.close());reader.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();displayImage(currentImage+(e.key==='ArrowLeft'?-1:1))}});
+const sources=document.getElementById('sources-dialog');document.getElementById('sources-button').addEventListener('click',()=>{opener=document.getElementById('sources-button');sources.showModal();document.body.classList.add('viewer-open')});document.getElementById('sources-close').addEventListener('click',()=>sources.close());
+[reader,sources].forEach(dialog=>{dialog.addEventListener('close',()=>{document.body.classList.remove('viewer-open');if(opener)opener.focus({preventScroll:true})});dialog.addEventListener('click',e=>{const r=dialog.getBoundingClientRect();if(e.target===dialog&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))dialog.close()})});
+fromHash();
+})();
+</script>
+</body>
+</html>
